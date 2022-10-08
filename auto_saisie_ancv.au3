@@ -1,4 +1,4 @@
-#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#Region ;***à* Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Run_Stop_OnError=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include <GUIConstants.au3>
@@ -9,28 +9,46 @@ Func saisie_cheque($montant, $numero)
 	Sleep(100)
 	Send("{F12}")
 	Sleep(1200)
-	Send("document.getElementById('addPaymentButton').click(){ENTER}")
-	Sleep(1800)
-	Send('$("input.dateInput:visible").first().focus(){ENTER}')
+;~ 	Send("document.getElementById('addPaymentButton').click(){ENTER}")
+	Send("function clickPaymentButton() { if ($('#sparkTemplateLoading').length == 0 && document.getElementById('addPaymentButton')) { document.getElementById('addPaymentButton').click(); document.title='Nouveau Paiement'; } else {setTimeout(clickPaymentButton, 1000)}}; clickPaymentButton();", 1)
+	Send("{ENTER}")
+	WinWaitActive("Nouveau Paiement")
+	Send('function openDatePicker() { if ($("input.dateInput:visible").length >= 1) {$("input.dateInput:visible").first().focus(); document.title="Nouvel ANCV"; } else {setTimeout(openDatePicker, 1000);} }; openDatePicker()',1)
+;~ 	Send('$("input.dateInput:visible").first().focus(){ENTER}')
+	Send('{ENTER}')
 	Sleep(100)
 	Send("{F12}")
-	Sleep(500)
+	WinWaitActive("Nouvel ANCV")
 	Send("{ENTER}{TAB}")
 	Send($montant)
 	Send("{TAB}")
 	Send("ANCV")
-	Sleep(300)
+	Sleep(1000)
 	Send("{TAB}")
 	Send($numero)
+	WinWaitActive("Nouvel ANCV")
+	Sleep(300)
+	Send("{F12}")
+	Sleep(1200)
+	WinWaitActive("Nouvel ANCV")
+	Send('function validateAncv() { if ($(`input[name="BuyPackerAccountingEntryOptionOtherCheckNumber"][value]:visible`).length >= 1 && $(`input[name="BuyPackerAccountingEntryOptionOtherCheckNumber"][value]:visible`)[0].value =="'&$numero&'") { $(`.button.buttonOrange:contains("Enregistrer"):visible`).first().click(); document.title="Transaction n"; } else {setTimeout(validateAncv, 1000);} }; validateAncv()',1)
+	Send('{ENTER}')
+	;- Send("$(`.button.buttonOrange:contains('Enregistrer'):visible`).first().click(); document.title='Transaction n'; {ENTER}")
+	Sleep(300)
+	Send("{F12}")
+	Sleep(3000)
+
+	;- function validateAncv() { if ($(`input[name="BuyPackerAccountingEntryOptionOtherCheckNumber"][value]:visible`).length >= 1 && $(`input[name="BuyPackerAccountingEntryOptionOtherCheckNumber"][value]:visible`)[0].value =="'&$numero&'") { $(`.button.buttonOrange:contains('Enregistrer'):visible`).first().click(); document.title='Transaction n'; } else {setTimeout(validateAncv, 1000);} }; validateAncv()
 EndFunc
 
 Func validate()
-	WinActivate("Transaction n")
-	WinWaitActive("Transaction n")
+	WinActivate("Nouvel ANCV")
+	WinWaitActive("Nouvel ANCV")
 	Sleep(100)
 	Send("{F12}")
 	Sleep(1200)
-	Send("$(`.button.buttonOrange:contains('Enregistrer'):visible`).first().click(){ENTER}")
+	;-Send('function validateAncv() { if ($(`input[name="BuyPackerAccountingEntryOptionOtherCheckNumber"][value]:visible`).length >= 1 && $(`input[name="BuyPackerAccountingEntryOptionOtherCheckNumber"][value]:visible`)[0].value =="'&$numero&'") { $(`.button.buttonOrange:contains("Enregistrer"):visible`).first().click(); document.title="Transaction n"; } else {setTimeout(validateAncv, 1000);} }; validateAncv()')
+	Send("$(`.button.buttonOrange:contains('Enregistrer'):visible`).first().click(); document.title='Transaction n'; {ENTER}")
 	Sleep(300)
 	Send("{F12}")
 EndFunc
@@ -76,6 +94,8 @@ Func Start_GUI()
 
 EndFunc
 
+
+;- saisie_cheque(50,"012345678")
 
 If ($CmdLine[0] < 2) Then
 	Start_GUI()
