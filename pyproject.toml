@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ancv"
+version = "0.1.0"
+description = ""
+authors = ["Philippe TONY <philippe@philippe-tony.info>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pyserial = "^3.5"
+pysimplegui = "^4.60.5"
+pyautoit = "^0.6.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
