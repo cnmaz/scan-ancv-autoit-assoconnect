@@ -44,10 +44,10 @@
 ;~ EndFunc
 
 Func check_cheque($numero)
-	WinActivate("https://cnmaz.assoconnect.com/organization/134216/accounting/check-remittance")
-	WinWaitActive("https://cnmaz.assoconnect.com/organization/134216/accounting/check-remittance")
+	WinActivate("Remise de chèques")
+	WinWaitActive("Remise de chèques")
 	;~ Se positionner sur numéro de chèque
-	Send("{F10}{SPACE}R")
+	Send("{F10}{SPACE}RR")
 	Send("Numéro de chèq")
 	Send("{ESC}")
 ;~ 	Send("{CTRLDOWN}{HOME}{CTRLUP}{ESC}")
@@ -57,32 +57,14 @@ Func check_cheque($numero)
 	Sleep(100)
 	Send($numero)
 	Sleep(2000)
-	Send("{TAB 2}")
+	Send("{TAB 3}")
 	Sleep(300)
 ;~ 	Send("{ESC}")
 ;~ 	Send("{SHIFTDOWN}{TAB}{SHIFTUP}")
 ;~ 	Sleep(300)
-	WinWaitActive("https://cnmaz.assoconnect.com/organization/134216/accounting/check-remittance")
+	WinWaitActive("Remise de chèques")
 	Send("{SPACE}")
 EndFunc
-
-
-;~ check_cheque("0000118")
-;~ check_cheque("0001134")
-;~ check_cheque("6502896")
-;~ check_cheque("3850461")
-;~ check_cheque("0000443")
-
-
-
-
-;~ check_cheque("6194602")
-;~ check_cheque("4171487")
-;~ check_cheque("0000255")
-
-;~ check_cheque("0002445")
-
-
 
 
 If ($CmdLine[0] == 0) Then
@@ -90,3 +72,10 @@ If ($CmdLine[0] == 0) Then
 Else
 	check_cheque($CmdLine[1])
 EndIf
+
+;~ check_cheque("6041202")
+;~ check_cheque("7488232")
+;~ check_cheque("3216506")
+;~ check_cheque("3102149")
+;~ check_cheque("7012779")
+;~ check_cheque("2290717")
